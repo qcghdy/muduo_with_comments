@@ -109,7 +109,10 @@ class Channel : boost::noncopyable
   void remove();
 
  private:
-  void update(); // 通过调用loop中函数，改变本fd在epoll中监听的事件
+  // 注册或者更新。即当1个fd已经绑定好了它所要监听的的事件后，那么这个channel就可以使用了
+  // 此时，调用下update，将其注册/更新到eventloop中的的poller上去。
+  // 通过调用loop中函数，改变本fd在epoll中监听的事件
+  void update(); 
   void handleEventWithGuard(Timestamp receiveTime); // 在临界区代码中处理事件
 
   static const int kNoneEvent;
